@@ -4,6 +4,7 @@ from PIL import Image
 import torch
 import numpy as np
 import math
+import matplotlib.pyplot as plt
 
 
 """
@@ -86,10 +87,14 @@ noise_imgs = torch.stack(noise_imgs, dim=0)
 noise_imgs = (noise_imgs.clamp(-1, 1) + 1) / 2
 noise_imgs = (noise_imgs * 255).type(torch.uint8)
 
-# 从堆叠的噪声图像张量中提取第 7 个噪声级别的图像
-# 转换为 PIL 图像对象并设置为 RGB 模式
-# Convert back to image and display
-display_img = Image.fromarray(noise_imgs[7].squeeze(0).numpy(), 'RGB')
+# 使用 matplotlib 显示所有噪声级别的图像
+plt.figure(figsize=(20, 5))
+for idx, (noise_level, img) in enumerate(zip(noise_levels, noise_imgs)):
+    plt.subplot(1, len(noise_levels), idx + 1)
+    plt.imshow(img.squeeze(0).numpy())
+    plt.title(f'噪声级别: {noise_level}')
+    plt.axis('off')
 
-# 显示生成的噪声图像
-display_img
+plt.tight_layout()
+plt.show()
+
