@@ -1,2 +1,2 @@
-# Stable-Diffusion-PyTorch
+# Stable Diffusion PyTorch
 PyTorch implementation of Stable Diffusion
